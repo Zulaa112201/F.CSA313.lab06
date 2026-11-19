@@ -1,0 +1,17 @@
+# transfer.model - Хэсэг A-гийн сонголт/утгууд + A2-ын хязгаарлалтууд
+From:      Valid, Frozen, Missing
+To:        Valid, Missing, SameAsFrom
+Amount:    Normal, ExactBalance, Zero, Negative, OverBalance, OverLimit
+Currency:  Same, Different
+DailyUsed: None, Partial
+
+# [ERROR] - алдаат утгыг бусад бүх параметрийн "энгийн" утгатай ганцхан удаа
+IF [From] <> "Valid" THEN [To] = "Valid" AND [Amount] = "Normal" AND [Currency] = "Same" AND [DailyUsed] = "None";
+IF [To] <> "Valid" THEN [From] = "Valid" AND [Amount] = "Normal" AND [Currency] = "Same" AND [DailyUsed] = "None";
+IF [Amount] IN {"Zero", "Negative"} THEN [From] = "Valid" AND [To] = "Valid" AND [Currency] = "Same" AND [DailyUsed] = "None";
+
+# [SINGLE] - хязгаарын утга / далд орчны төлөвийг нэг л удаа
+IF [Amount] = "ExactBalance" THEN [Currency] = "Same" AND [DailyUsed] = "None";
+IF [DailyUsed] = "Partial" THEN [Amount] = "Normal" AND [Currency] = "Same";
+
+# [IF fromOK AND toOK] - OverBalance/OverLimit зөвхөн хүчинтэй данстай (дээрх ERROR дүрмээс автоматаар мөрдөнө)

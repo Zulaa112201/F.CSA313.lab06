@@ -1,0 +1,6 @@
+# transfer-neg.model - алдаа буцаах утгуудыг ~ (negative) гэж тэмдэглэсэн, хязгаарлалтгүй
+From:      Valid, ~Frozen, ~Missing
+To:        Valid, ~Missing, ~SameAsFrom
+Amount:    Normal, ExactBalance, ~Zero, ~Negative, ~OverBalance, ~OverLimit
+Currency:  Same, Different
+DailyUsed: None, Partial
